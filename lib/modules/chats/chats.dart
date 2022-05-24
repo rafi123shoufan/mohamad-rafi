@@ -20,6 +20,7 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
+
   myChatFriend(context) {
     return  GestureDetector(
       onTap: (){
