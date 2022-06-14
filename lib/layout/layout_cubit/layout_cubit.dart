@@ -7,11 +7,14 @@ import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/modules/add_post/add_post.dart';
 import 'package:social_media/modules/chats/chats.dart';
 import 'package:social_media/modules/home/home_screen.dart';
-import 'package:social_media/modules/notifications/notifications.dart';
+import 'package:social_media/modules/notification_screen/notification_screen.dart';
 import 'package:social_media/modules/profile/profile.dart';
+import 'package:social_media/modules/search_screen/search_screen.dart';
 
 class LayoutCubit extends Cubit<LayoutStates>{
   LayoutCubit() : super(InitialLayoutStates());
+
+
 
   static LayoutCubit get(BuildContext context){
     return BlocProvider.of(context);
@@ -23,15 +26,23 @@ class LayoutCubit extends Cubit<LayoutStates>{
     ProfileScreen(),
     AddPostScreen(),
     ChatScreen(),
-    NotificationsScreen(),
+    SearchScreen(),
   ];
-
-   void changeCurrentIndex(int index){
-    currentIndex = index ;
-    print(state);
-    print(currentIndex);
-    emit(ChangeBottomNavBarState());
-  }
+  List<String> titles = [
+    'Breeze',
+    'Profile',
+    'Add Post',
+    'Chats',
+    'Search'
+  ];
+   void changeCurrentIndex(int index) {
+     print(state);
+     print(currentIndex);
+     if (currentIndex != 2) {
+       currentIndex = index;
+       emit(ChangeBottomNavBarState());
+     }
+   }
   bool isDark = false;
   void changeAppMode(){
     isDark = ! isDark;
@@ -68,6 +79,20 @@ class LayoutCubit extends Cubit<LayoutStates>{
     }
     else{
       emit(ErrorPickedCoverImage());
+    }
+  }
+
+  File ? postImage ;
+  Future getPostImage() async{
+    final pickedFile = await picker.pickImage(
+        source: ImageSource.gallery
+    );
+    if(pickedFile != null){
+      coverImage = File(pickedFile.path);
+      emit(SuccessPickedPostImage());
+    }
+    else{
+      emit(ErrorPickedPostImage());
     }
   }
 }

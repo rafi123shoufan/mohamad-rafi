@@ -3,6 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/layout/layout_cubit/layout_cubit.dart';
 import 'package:social_media/layout/layout_cubit/layout_states.dart';
+import 'package:social_media/modules/add_post/add_post.dart';
+import 'package:social_media/modules/login.dart';
+import 'package:social_media/modules/notification_screen/notification_screen.dart';
+import 'package:social_media/modules/settings/setting_screen.dart';
+import 'package:social_media/modules/user_info/user_info.dart';
 import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
@@ -12,13 +17,15 @@ class LayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return  BlocConsumer<LayoutCubit , LayoutStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+
+        },
         builder: (context, state) {
           var cubit = LayoutCubit.get(context);
           return Scaffold(
             drawer: Drawer(
-
               child: Column(
                 children: [
                   Expanded(
@@ -37,7 +44,7 @@ class LayoutScreen extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: Colors.white,//Theme.of(context).scaffoldBackgroundColor ,
+                                color:cubit.isDark ? Theme.of(context).scaffoldBackgroundColor: Colors.white,//Theme.of(context).scaffoldBackgroundColor ,
                                 shape: BoxShape.circle,
                               ),
                               child: CircleAvatar(
@@ -53,13 +60,13 @@ class LayoutScreen extends StatelessWidget {
                             Text(
                               'Rafi Shoufan',
                               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                color: Colors.white
+                                color:cubit.isDark ? Colors.white70: Colors.white,
                               ),
                             ),
                             Text(
                               'rafishoufan@gmail.com',
                               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                                color: Colors.white
+                                color:cubit.isDark ? Colors.white70: Colors.white,
                               ),
                             )
                           ],
@@ -75,18 +82,6 @@ class LayoutScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(15),
                         child: Column(
                           children: [
-                            ListTile(
-                              onTap: (){
-
-                              },
-                              title: Text(
-                                'Profile'
-                              ),
-                              leading: Icon(
-                                  IconBroken.User,
-                                color: Theme.of(context).iconTheme.color,
-                              ),
-                            ),
                             ListTile(
                               onTap: (){
 
@@ -114,7 +109,12 @@ class LayoutScreen extends StatelessWidget {
                             ),
                             ListTile(
                               onTap: (){
-
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SettingScreen(),
+                                    )
+                                );
                               },
                               title: Text(
                                   'Settings'
@@ -124,12 +124,14 @@ class LayoutScreen extends StatelessWidget {
                                 color: Theme.of(context).iconTheme.color,
                               ),
                             ),
+
                             Divider(
                               height: 2,
                               color: Colors.grey,
                             ),
                             ListTile(
                               onTap: (){
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen(),), (route) => false);
 
                               },
                               title: Text(
@@ -144,18 +146,11 @@ class LayoutScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             appBar: AppBar(
-              systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarIconBrightness: cubit.isDark ? Brightness.dark :Brightness.light,
-                  statusBarColor: Colors.transparent
-              ),
-              iconTheme: IconThemeData(
-                color: cubit.isDark ? Colors.black : Colors.white
-              ),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   gradient: linearGradient
@@ -165,30 +160,41 @@ class LayoutScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Breeze',
+                    '${cubit.titles[cubit.currentIndex]}',
                     style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
                       fontFamily: 'Handmade' ,
                       fontSize: 40,
-                      color: cubit.isDark ? Colors.black : Colors.white
-                    )
+                    ),
+
                   ),
                 ],
               ),
               actions: [
-                IconButton(
-                  onPressed: (){
-                  cubit.changeAppMode();
-                },
-                    icon: Icon(Icons.brightness_2_outlined,color: cubit.isDark ? Colors.black : Colors.white,),
-                  iconSize: 30 ,
+                Stack(
+                  alignment: Alignment(-0.5, -0.5),
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: (){
+                      Navigator.push(
+                        context,
+                      MaterialPageRoute(
+                        builder: (context) => NotificationScreen() ,
+                      )
+                      );
+                    },
+                      icon: Icon(
+                          IconBroken.Notification ,
+                          color: Theme.of(context).appBarTheme.iconTheme!.color),
+                      iconSize: 35 ,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.indigo,
+                      radius: 4,
+                    )
+                  ],
                 ),
-                IconButton(onPressed: (){
-
-                },
-                  icon: Icon(IconBroken.Search , color: cubit.isDark ? Colors.black : Colors.white,),
-                  iconSize: 30 ,
-                ),
-                SizedBox( width:5 ,),
+                SizedBox( width:15 ,),
               ],
             ),
             body: cubit.Screens[cubit.currentIndex],
@@ -203,24 +209,46 @@ class LayoutScreen extends StatelessWidget {
                     end: Alignment.bottomRight
                 ),
               ),
-              child:*/ BottomNavigationBar(
-                items: [
-                BottomNavigationBarItem(icon: Icon(IconBroken.Home) ,label: 'Home' ),
-                  BottomNavigationBarItem(icon: Icon(IconBroken.User) ,label: 'Profile' ),
-                  BottomNavigationBarItem(icon: Icon(IconBroken.Paper_Plus) ,label: 'Add Post'),
-                BottomNavigationBarItem(icon: Icon(IconBroken.Chat), label: 'Chats'),
-                BottomNavigationBarItem(icon: Icon(IconBroken.Notification) ,label: 'Notifications'),
-              ],
-                onTap: (index){
-                  cubit.changeCurrentIndex(index);
-                },
-                currentIndex: cubit.currentIndex,
-              unselectedItemColor: cubit.isDark ? Colors.black  :Colors.white,
+              child:*/ Stack(
+              alignment: Alignment.center,
+                children: [
+                  BottomNavigationBar(
+                    items: [
+                    BottomNavigationBarItem(icon: Icon(IconBroken.Home) ,label: 'Home' ),
+                      BottomNavigationBarItem(icon: Icon(IconBroken.User) ,label: 'Profile' ),
+                      BottomNavigationBarItem(icon: Icon(IconBroken.Paper_Plus) ,label: ''),
+                    BottomNavigationBarItem(icon: Icon(IconBroken.Chat), label: 'Chats'),
+                    BottomNavigationBarItem(icon: Icon(IconBroken.Search) ,label: 'Search'),
+                  ],
+                    onTap: (index){
+                      cubit.changeCurrentIndex(index);
+                    },
+                    currentIndex: cubit.currentIndex,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        gradient: linearGradient2,
+                      shape: BoxShape.circle
+                    ),
+                    child: FloatingActionButton(
+                      onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddPostScreen(),
+                            )
+                        );
+                      },
+                      child: Icon(
+                          Icons.add,
+                        color: cubit.isDark ? Colors.black45 : Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-
           );
         },
-
     );
   }
 }

@@ -5,73 +5,53 @@ import 'package:social_media/layout/layout_cubit/layout_cubit.dart';
 import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/modules/comment_screen/comment_screen.dart';
 import 'package:social_media/modules/persone_profile/persone_profile.dart';
-import 'package:social_media/modules/post_screen/post_screen.dart';
+import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
 
-class HomeScreen extends StatelessWidget {
+class PostScreen extends StatelessWidget {
+  const PostScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LayoutCubit , LayoutStates>(
-      listener: (context, state) {},
+    return BlocConsumer<LayoutCubit,LayoutStates>(
+      listener: (context, state) {
+
+      },
       builder: (context, state) {
         var cubit = LayoutCubit.get(context);
-        return SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 5,
-               /*   clipBehavior: Clip.hardEdge, // important to make border radius active
-                   shape: RoundedRectangleBorder(
-                     borderRadius: BorderRadius.circular(15),
-                   ),*/
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Image(
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/12.jpg' , ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                ListView.separated(
-                  shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => myPost(context ,cubit),
-                    separatorBuilder: (context, index) => SizedBox(height: 5,),
-                    itemCount: 10
-                )
-              ],
-            ),
+        return Scaffold(
+          appBar: defaultAppBar(
+              context: context,
+              text: 'Post',
+              cubit: cubit,
+              function: (){
+                Navigator.pop(context);
+              },
+              icon: IconBroken.Arrow___Left,
+              action: SizedBox()
+          ),
+          body: Column(
+            children: [
+              myPost(context)
+            ],
           ),
         );
       },
     );
   }
+  Widget myPost(context) {
+    var pageController = PageController();
+    var cubit = LayoutCubit.get(context);
+    return Expanded(
+      child: Card(
 
- Widget myPost(context , cubit) {
-   var pageController = PageController();
-   var cubit = LayoutCubit.get(context);
-   return GestureDetector(
-     onTap: (){
-       Navigator.push(
-         context,
-       MaterialPageRoute(
-           builder:(context) => PostScreen(),
-       )
-       );
-     },
-     child: Card(
         shape: RoundedRectangleBorder(
+
           borderRadius: BorderRadius.circular(8),
         ),
-        color: cubit.isDark ? darkCardColor : Colors.white ,
         elevation: 10,
+        color: cubit.isDark ? darkCardColor : Colors.white ,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -104,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                             child: Text(
                               'Rafi Shoufan' ,
                               style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-                            ),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -129,7 +109,6 @@ class HomeScreen extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            backgroundColor: cubit.isDark ? Colors.black : Colors.white,
                             actions: [
                               Row(
                                 children: [
@@ -138,8 +117,7 @@ class HomeScreen extends StatelessWidget {
                                   }, icon: Icon(IconBroken.Bookmark)
                                   ),
                                   Text(
-                                    'Save',
-                                    style: Theme.of(context).textTheme.bodyText2,
+                                      'Save'
                                   ),
 
                                 ],
@@ -168,12 +146,12 @@ class HomeScreen extends StatelessWidget {
                               ),
 
                               TextButton(
-                              onPressed: (){
-                                Navigator.pop(context);
-                        }, child: Text(
-                        'Done'
-                        )
-                        ),
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text(
+                                  'Done'
+                              )
+                              ),
                               /*Row(
                                 children: [
                                   TextButton(
@@ -196,8 +174,8 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         );
-                  }, icon: Icon(Icons.more_horiz)
-                   //icon:  Icon(IconBroken.More_Square , color: Colors.white60,),
+                      }, icon: Icon(Icons.more_horiz)
+                    //icon:  Icon(IconBroken.More_Square , color: Colors.white60,),
                   )
                 ],
               ) ,
@@ -216,7 +194,7 @@ class HomeScreen extends StatelessWidget {
                   child: Text('We are going to conquer the social media community , we will make people forget about facebook and other social media apps '
                       'because we have Rafi with us رافي لديكم فلا خوف عليكم ',
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontWeight: FontWeight.w500
+                        fontWeight: FontWeight.w500
                     ),
                     textAlign: TextAlign.start,
                   )
@@ -232,15 +210,15 @@ class HomeScreen extends StatelessWidget {
                 child: PageView.builder(
                   controller: pageController ,
                   itemBuilder: (context, index) => myPhoto(),
-                physics: BouncingScrollPhysics(),
-                itemCount: 5,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: 5,
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
 
               SmoothPageIndicator(
-                  controller: pageController,
-                  count: 5,
+                controller: pageController,
+                count: 5,
                 /*effect: ExpandingDotsEffect(
                   dotWidth: 7,
                   dotHeight: 7,
@@ -254,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                   activeDotColor: Colors.blue,
                   dotColor: Colors.grey,
                   spacing: 5,
-                //  verticalOffset: 10,
+                  //  verticalOffset: 10,
                 ),
               ),
               Padding(
@@ -270,7 +248,7 @@ class HomeScreen extends StatelessWidget {
                             Text('15' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
                                 color:Colors.grey,
                                 fontSize: 15
-                              ),
+                            ),
                             ),
                           ],
                         ),
@@ -295,11 +273,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ) ,
               SizedBox(
-                height: 5,
+                height:   15,
               ),
               Divider(
                 height: 2,
                 color: Colors.grey,
+              ),
+              SizedBox(
+                height:   15,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -344,7 +325,7 @@ class HomeScreen extends StatelessWidget {
                             Text('Like' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
                                 color:Colors.grey,
                                 fontSize: 14
-                              )
+                            )
                             ),
                           ],
                         ),
@@ -357,10 +338,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-   ) ;
- }
+    ) ;
+  }
 
- Widget myPhoto() {
+  Widget myPhoto() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: FittedBox(
@@ -373,6 +354,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
- }
+  }
 }
-

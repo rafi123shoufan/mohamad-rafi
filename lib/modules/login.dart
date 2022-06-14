@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:social_media/modules/user_info/user_info.dart';
 import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
@@ -19,12 +20,7 @@ class LoginScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: linearGradient
                 ),
-                /*child:  Image.asset(
-                       'assets/images/girl.jpg',
-                  fit: BoxFit.fill,
-                  color: Colors.white.withOpacity(0.5),
-                  colorBlendMode: BlendMode.modulate,
-                   ),*/
+
                  child:Padding(
                    padding: const EdgeInsets.all(20),
                    child: Column(
@@ -73,11 +69,61 @@ class LoginScreen extends StatelessWidget {
                                    )
                                ),
                              ),*/
+                           /*  Container(
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white70,
 
+                               ),
+                               child: Padding(
+                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: TextFormField(
+                                   decoration: InputDecoration(
+                                     border: InputBorder.none,
+                                     hintText: 'Email',
+                                     hintStyle: TextStyle(
+                                       fontSize: 20,
+                                       color: Colors.white
+                                     ),
+                                     prefixIcon: Icon(
+                                       Icons.email,
+                                       color: Colors.white,
+                                     )
+                                   ),
+                                 ),
+                               ),
+                             ),
+                             SizedBox(
+                               height: 20,
+                             ),
+                             Container(
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(20),
+                                 color: Colors.white70,
+                               ),
+                               child: Padding(
+                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: TextFormField(
+                                   decoration: InputDecoration(
+                                       border: InputBorder.none,
+                                       hintText: 'Email',
+                                       hintStyle: TextStyle(
+                                           fontSize: 20,
+                                         color: Colors.white
+                                       ),
+                                       prefixIcon: Icon(
+                                           Icons.email,
+                                         color: Colors.white,
+                                       )
+                                   ),
+                                 ),
+                               ),
+                             ),*/
                              TextFormField(
                                decoration: InputDecoration(
                                    labelText: 'Password',
-                                   labelStyle: TextStyle(fontSize: 16.0,),
+                                   hintText: 'dcvdv',
+                                   labelStyle: TextStyle(fontSize: 16.0,color: Colors.white),
                                    prefixIcon: Icon(IconBroken.Lock,color: Colors.white,),
                                    suffixIcon: Icon(IconBroken.Hide,color: Colors.white,) ,
                                    focusedBorder: OutlineInputBorder(
@@ -93,6 +139,9 @@ class LoginScreen extends StatelessWidget {
                                        ),
                                    ),
                                ),
+                               style: TextStyle(
+                                 color: a1
+                               ),
                              ),
                              SizedBox(
                                height: 30,
@@ -102,14 +151,14 @@ class LoginScreen extends StatelessWidget {
                                  labelText: 'Email',
                                    labelStyle: TextStyle(fontSize: 16.0,),
                                    prefixIcon: Icon(IconBroken.Message,color: Colors.white,),
-                                   /*border: OutlineInputBorder(
+                                   border: OutlineInputBorder(
                                        borderRadius: BorderRadius.circular(20),
                                        borderSide: BorderSide(
 
                                        color: Colors.white,
                                      )
 
-                                   )*/
+                                   ),
                                    focusedBorder: OutlineInputBorder(
                                      borderRadius: BorderRadius.circular(20),
                                      borderSide: BorderSide(
@@ -140,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                              GestureDetector(
                                 onTap: (){
-
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfoScreen(),));
                                 },
                                child: Padding(
                                  padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -202,7 +251,6 @@ class LoginScreen extends StatelessWidget {
                      ],
                    ),
                  ),
-
               ),
     );
   }
