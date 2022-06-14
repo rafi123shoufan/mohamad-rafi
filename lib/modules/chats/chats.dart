@@ -7,7 +7,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView.separated(
          physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) => myChatFriend(context),

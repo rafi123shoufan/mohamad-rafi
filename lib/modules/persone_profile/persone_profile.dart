@@ -1,27 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:social_media/layout/layout_cubit/layout_cubit.dart';
 import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/modules/comment_screen/comment_screen.dart';
-import 'package:social_media/modules/edit_profile/edit_profile_screen.dart';
-import 'package:social_media/modules/persone_profile/persone_profile.dart';
 import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class PersoneProfileScreen extends StatelessWidget {
+  const PersoneProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LayoutCubit,LayoutStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          var cubit = LayoutCubit.get(context);
-          return SingleChildScrollView(
+    return BlocConsumer<LayoutCubit, LayoutStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = LayoutCubit.get(context);
+        return Scaffold(
+          appBar: /*AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarIconBrightness: cubit.isDark? Brightness.light : Brightness.dark,
+                statusBarColor: Colors.transparent
+            ),
+            title: Text(
+              'Rafi Shoufan',
+              style: Theme.of(context).appBarTheme.titleTextStyle!.copyWith(
+                fontFamily: 'Handmade' ,
+                fontSize: 40,
+                color: cubit.isDark? Colors.white : Colors.black,
+              ),
+            ),
+            leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(
+              Icons.arrow_back,
+              color: cubit.isDark? Colors.white : Colors.black,
+            )
+            ),
+          ),*/
+          defaultAppBar(
+            context: context,
+            text: 'Rafi Shoufan',
+            cubit: cubit,
+            function: () {
+              Navigator.pop(context);
+            },
+            action: SizedBox(),
+          ),
+          body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   Container(
@@ -32,59 +63,63 @@ class ProfileScreen extends StatelessWidget {
                           height: 190,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                           // gradient: linearGradient,
-                              borderRadius:BorderRadius.only(
-                                topLeft:Radius.circular(6) ,
+                            // gradient: linearGradient,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(6),
                                 topRight: Radius.circular(6),
                               ),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: AssetImage('assets/images/14.jpeg' ,),
-                              )
-                          ),
+                                image: AssetImage(
+                                  'assets/images/14.jpeg',
+                                ),
+                              )),
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             padding: EdgeInsets.all(9),
                             decoration: BoxDecoration(
-                                color: Theme.of(context).scaffoldBackgroundColor ,
-                                shape: BoxShape.circle,
-
+                              color: Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              shape: BoxShape.circle,
                             ),
                             child: CircleAvatar(
                               radius: 70,
                               backgroundColor: Colors.transparent,
                               backgroundImage: NetworkImage(
-                                  'https://images2.habeco.si/upload/images/Blog/6696.jpg'
-                              ),
+                                  'https://images2.habeco.si/upload/images/Blog/6696.jpg'),
                             ),
                           ),
                         ),
-                          /* Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white
-                        ),
-                        child: ClipOval(
-                            child: SizedBox.fromSize(
-                              size: Size.fromRadius(48),
-                              child: Image.network('https://images2.habeco.si/upload/images/Blog/6696.jpg',
-                              fit: BoxFit.cover,),
-                            )
-                        ),
-                      )*/
+                        /* Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white
+                            ),
+                            child: ClipOval(
+                                child: SizedBox.fromSize(
+                                  size: Size.fromRadius(48),
+                                  child: Image.network('https://images2.habeco.si/upload/images/Blog/6696.jpg',
+                                  fit: BoxFit.cover,),
+                                )
+                            ),
+                          )*/
                       ],
                     ),
                   ),
                   Text(
                     'Rafi Shoufan',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 27
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(
+                        fontSize: 27
                     ),
                   ),
-
                   SizedBox(
                     height: 20,
                   ),
@@ -98,13 +133,13 @@ class ProfileScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
-                             height: 3,
+                              height: 3,
                             ),
                             Text(
                               'Posts',
-                               style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                    color: Colors.grey
-                                ),
+                              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                  color: Colors.grey
+                              ),
                             ),
                           ],
                         ),
@@ -117,7 +152,7 @@ class ProfileScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
-                             height: 3,
+                              height: 3,
                             ),
                             Text(
                               'Photos',
@@ -136,7 +171,7 @@ class ProfileScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
-                             height: 3,
+                              height: 3,
                             ),
                             Text(
                               'Followers',
@@ -155,7 +190,7 @@ class ProfileScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
-                             height: 3,
+                              height: 3,
                             ),
                             Text(
                               'Following',
@@ -169,7 +204,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Row(
                     children: [
@@ -177,15 +212,16 @@ class ProfileScreen extends StatelessWidget {
                         flex: 3,
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              color: cubit.isDark ? Colors.white70 : Colors.black12
-                            )
+                              side: BorderSide(
+                                  color: cubit.isDark ? Colors.white70 : Colors
+                                      .black12
+                              )
                           ),
-                          onPressed: (){
+                          onPressed: () {
 
                           },
                           child: Text(
-                              'Add Photo'
+                            'Add Friend',
                           ),
                         ),
                       ),
@@ -193,26 +229,22 @@ class ProfileScreen extends StatelessWidget {
                         width: 5,
                       ),
                       Expanded(
+                        flex: 1,
                         child: OutlinedButton(
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                              MaterialPageRoute(
-                                  builder:(context) => EditProfileScreen(
+                            onPressed: () {
 
-                                  ), ));
-                        },
+                            },
                             style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                    color: cubit.isDark ? Colors.white70 : Colors.black12
+                                    color: cubit.isDark ? Colors.white70 : Colors
+                                        .black12
                                 )
                             ),
-                            child: Icon(
-                                IconBroken.Edit,
+                            child: Text(
+                              'Follow',
                             )
                         ),
                       ),
-
                     ],
                   ),
                   SizedBox(
@@ -233,30 +265,30 @@ class ProfileScreen extends StatelessWidget {
                       Expanded(
                         child: RichText(
                             text: TextSpan(
-                                text: 'Lives In ',
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                    fontSize: 18,
-                                    color: cubit.isDark ? Colors.white : Colors.black
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'Damascus',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: cubit.isDark ? Colors.white : Colors.black
-                                    ),
-                                  )
-                                ]
-                            )),
+                          text: 'Lives In ',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(
+                              fontSize: 18,
+                              color: cubit.isDark ? Colors.white : Colors.black
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Damascus',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: cubit.isDark ? Colors.white : Colors.black
+                              ),
+                            )
+                          ]
+                        )),
                       ),
                     ],
                   ),
@@ -320,30 +352,30 @@ class ProfileScreen extends StatelessWidget {
                       Expanded(
                         child: RichText(
                             text: TextSpan(
-                                text: 'Studying ',
+                            text: 'Studying ',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                fontSize: 18,
+                                color: cubit.isDark ? Colors.white : Colors.black
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Faculty of Information Technology',
                                 style: Theme
                                     .of(context)
                                     .textTheme
                                     .bodyText2!
                                     .copyWith(
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                     color: cubit.isDark ? Colors.white : Colors.black
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: 'Faculty of Information Technology',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: cubit.isDark ? Colors.white : Colors.black
-                                    ),
-                                  )
-                                ]
-                            )
+                              )
+                            ]
+                        )
                         ),
                       ),
                     ],
@@ -409,30 +441,30 @@ class ProfileScreen extends StatelessWidget {
                       Expanded(
                         child: RichText(
                             text: TextSpan(
-                                text: 'Job ',
+                            text: 'Job ',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                fontSize: 18,
+                                color: cubit.isDark ? Colors.white : Colors.black
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'IT Manager',
                                 style: Theme
                                     .of(context)
                                     .textTheme
                                     .bodyText2!
                                     .copyWith(
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                     color: cubit.isDark ? Colors.white : Colors.black
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: 'IT Manager',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: cubit.isDark ? Colors.white : Colors.black
-                                    ),
-                                  )
-                                ]
-                            )
+                              )
+                            ]
+                        )
                         ),
                       ),
                     ],
@@ -490,7 +522,7 @@ class ProfileScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
                   SizedBox(
-                    height: 20,
+                   height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -513,10 +545,12 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
     );
   }
+
   Widget myPost(context) {
     var pageController = PageController();
     var cubit = LayoutCubit.get(context);
@@ -564,7 +598,7 @@ class ProfileScreen extends StatelessWidget {
                                 .copyWith(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
-                                color: cubit.isDark ? Colors.white : Colors.black
+                              color: cubit.isDark ? Colors.white : Colors.black
                             ),
                           ),
                         ),
@@ -856,3 +890,4 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
