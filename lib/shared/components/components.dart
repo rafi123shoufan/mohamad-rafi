@@ -133,6 +133,7 @@ Widget myTextFormField({
 }
 
 
+
 Widget searchTextFormField(
 {
   required var cubit ,
@@ -141,8 +142,7 @@ Widget searchTextFormField(
   required IconData icon
 }
     ){
-  return
-    Container(
+  return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: cubit.isDark? darkCardColor: Colors.white,
