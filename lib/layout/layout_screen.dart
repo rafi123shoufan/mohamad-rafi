@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/layout/layout_cubit/layout_cubit.dart';
 import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/modules/add_post/add_post.dart';
-import 'package:social_media/modules/login.dart';
+import 'package:social_media/modules/login_screen/login_screen.dart';
 import 'package:social_media/modules/notification_screen/notification_screen.dart';
 import 'package:social_media/modules/settings/setting_screen.dart';
 import 'package:social_media/modules/user_info/user_info.dart';

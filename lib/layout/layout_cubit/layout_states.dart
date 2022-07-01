@@ -27,3 +27,10 @@ class ErrorPickedCoverImage extends LayoutStates{}
 
 class SuccessPickedPostImage extends LayoutStates{}
 class ErrorPickedPostImage extends LayoutStates{}
+
+
+class RemovePostPhoto extends LayoutStates{}
+
+
+class SuccessPickedPostVideo extends LayoutStates{}
+class ErrorPickedPostVideo extends LayoutStates{}

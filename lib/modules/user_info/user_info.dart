@@ -173,19 +173,6 @@ class UserInfoScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-
-                   myTextFormField(
-                        function: (value){
-                          if(value!.isEmpty){
-                            return 'Phone Must not be Empty' ;
-                          }
-                        },
-                        prefix: IconBroken.Call,
-                        text: 'Phone'
-                    ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   myTextFormField(
                       function: (value){
                         if(value!.isEmpty){

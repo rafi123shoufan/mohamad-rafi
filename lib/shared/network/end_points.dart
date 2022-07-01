@@ -1,0 +1,1 @@
+const Login = 'api/owner/login';

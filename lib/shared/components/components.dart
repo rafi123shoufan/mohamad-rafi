@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
 
 import 'constants.dart';
@@ -18,8 +19,8 @@ a,
 
 LinearGradient  linearGradient3 = LinearGradient(
   colors: [
-    a7,
-    a8
+ //   a7,
+ //   a8
   ],
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
@@ -162,4 +163,83 @@ Widget searchTextFormField(
       ),
 
   );
+}
+
+
+
+Widget registerTextFormField({
+  required FormFieldValidator validator,
+  required TextEditingController controller,
+  bool isHidden = true,
+  required String label,
+  required IconData prefixIcon,
+  IconData? suffixIcon,
+   Function ?function,
+  required TextInputType keyboardType
+}){
+  return TextFormField(
+    keyboardType: keyboardType,
+  validator: validator,
+  controller: controller,
+  obscureText: isHidden,
+  decoration: InputDecoration(
+  labelText: label,
+  labelStyle: TextStyle(fontSize: 16.0,color: Colors.white),
+  prefixIcon: Icon( prefixIcon,color: Colors.white,),
+  suffixIcon:IconButton(
+  onPressed: (){
+    function!();
+  }, icon: Icon(suffixIcon,color: Colors.white,),),
+focusedBorder: OutlineInputBorder(
+borderRadius: BorderRadius.circular(20),
+borderSide: BorderSide(
+color: Colors.white
+),
+),
+enabledBorder: OutlineInputBorder(
+borderRadius: BorderRadius.circular(20),
+borderSide: BorderSide(
+color: Colors.white
+),
+),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+    borderSide: BorderSide(
+        color: Colors.red
+    ),
+  ),
+),
+  );
+}
+
+
+void showToast(String message , ToastStates state){
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor: chooseToastColor(state),
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
+}
+enum ToastStates {
+  Success,
+  Error,
+  Warning
+}
+
+Color chooseToastColor(ToastStates state){
+  switch(state){
+    case ToastStates.Success :
+      return Colors.green;
+      break;
+    case ToastStates.Warning :
+      return Colors.yellow;
+      break;
+    case ToastStates.Error :
+      return Colors.red;
+      break;
+  }
 }

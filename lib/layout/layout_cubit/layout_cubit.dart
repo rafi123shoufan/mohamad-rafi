@@ -7,9 +7,9 @@ import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/modules/add_post/add_post.dart';
 import 'package:social_media/modules/chats/chats.dart';
 import 'package:social_media/modules/home/home_screen.dart';
-import 'package:social_media/modules/notification_screen/notification_screen.dart';
 import 'package:social_media/modules/profile/profile.dart';
 import 'package:social_media/modules/search_screen/search_screen.dart';
+import 'package:video_player/video_player.dart';
 
 class LayoutCubit extends Cubit<LayoutStates>{
   LayoutCubit() : super(InitialLayoutStates());
@@ -56,15 +56,13 @@ class LayoutCubit extends Cubit<LayoutStates>{
 
   Future getProfileImage() async{
     final pickedFile = await picker.pickImage(
-        source: ImageSource.gallery
+        source: ImageSource.gallery,
     );
     if(pickedFile != null){
       profileImage = File(pickedFile.path);
       emit(SuccessPickedProfileImage());
-      print(state);
     }else{
       emit(ErrorPickedProfileImage());
-      print(state);
   }
   }
 
@@ -82,17 +80,41 @@ class LayoutCubit extends Cubit<LayoutStates>{
     }
   }
 
-  File ? postImage ;
+  List<XFile> ? postImages = [];
   Future getPostImage() async{
-    final pickedFile = await picker.pickImage(
-        source: ImageSource.gallery
-    );
-    if(pickedFile != null){
-      coverImage = File(pickedFile.path);
+    final pickedFiles = await picker.pickMultiImage();
+    if(pickedFiles !=null ){
+      postImages!.addAll(pickedFiles);
       emit(SuccessPickedPostImage());
     }
     else{
       emit(ErrorPickedPostImage());
     }
   }
+
+  void removePostPhoto(){
+    postImages!.length = 0;
+    emit(RemovePostPhoto());
+  }
+
+  File ? video ;
+   VideoPlayerController ? videoPlayerController ;
+  Future getPostVideo() async{
+    final pickedVideo = await picker.pickVideo(
+      source: ImageSource.gallery
+    );
+    if(pickedVideo != null){
+      video = File(pickedVideo.path); // to convert from XFile to File
+      videoPlayerController = VideoPlayerController.file(video!)..initialize().then((_) {
+        emit(SuccessPickedPostVideo());
+        print('successsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+      });
+    }
+    else{
+      emit(ErrorPickedPostVideo());
+      print('else errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    }
+  }
+
 }
+

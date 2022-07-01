@@ -4,18 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/layout/layout_cubit/layout_cubit.dart';
 import 'package:social_media/layout/layout_cubit/layout_states.dart';
 import 'package:social_media/layout/layout_screen.dart';
+import 'package:social_media/models/login_models.dart';
 import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/components/constants.dart';
+import 'package:social_media/shared/network/local/cache_helper.dart';
+import 'package:social_media/shared/network/remote/dio_helper.dart';
 import 'modules/edit_profile/edit_profile_screen.dart';
-import 'modules/login.dart';
+import 'modules/login_screen/login_screen.dart';
+import 'modules/on_boarding_screen/on_boarding_screen.dart';
 import 'modules/profile/profile.dart';
+import 'modules/register_screen/register_screen.dart';
 import 'modules/user_info/user_info.dart';
 import 'shared/components/constants.dart';
 
-void main() {
+void main() async{
 
+  WidgetsFlutterBinding.ensureInitialized();
+  DioHelper.init();
+  await CacheHelper.init();
   runApp( MyApp() );
 
 
@@ -184,7 +192,7 @@ class MyApp extends StatelessWidget {
                   size: 30 ,
                 ),
                 elevation: 0,
-                backgroundColor: d1,
+             //   backgroundColor: d1,
                 type: BottomNavigationBarType.fixed,
                 selectedLabelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -195,10 +203,16 @@ class MyApp extends StatelessWidget {
                 unselectedItemColor:a
               ),
             ),
-            home:  LayoutScreen(),
+            home:  LoginScreen(),
           );
         },
       ),
     );
   }
 }
+
+
+
+
+
+
