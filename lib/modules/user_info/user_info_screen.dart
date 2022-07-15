@@ -359,7 +359,8 @@ class UserInfoScreen extends StatelessWidget {
                                     studing: studyingController.text,
                                     bio: bioController.text,
                                     Image: profileImage,
-                                    Image_cover: coverImage);
+                                    Image_cover: coverImage
+                                );
                                 print('something');
                               },
                               child: Container(
