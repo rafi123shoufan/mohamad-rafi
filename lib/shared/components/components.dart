@@ -92,6 +92,7 @@ AppBar defaultAppBar({
 }
 
 Widget myTextFormField({
+  required TextEditingController controller,
   required Function function,
   TextStyle style = const TextStyle(
     color: a1
@@ -115,6 +116,7 @@ Widget myTextFormField({
     validator: (value){
       function();
     },
+    controller: controller,
     style: style,
     decoration: InputDecoration(
         enabledBorder : enabledBorder,
@@ -216,7 +218,7 @@ color: Colors.white
 void showToast(String message , ToastStates state){
   Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 5,
       backgroundColor: chooseToastColor(state),

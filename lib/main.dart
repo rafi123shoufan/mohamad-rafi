@@ -16,7 +16,7 @@ import 'modules/login_screen/login_screen.dart';
 import 'modules/on_boarding_screen/on_boarding_screen.dart';
 import 'modules/profile/profile.dart';
 import 'modules/register_screen/register_screen.dart';
-import 'modules/user_info/user_info.dart';
+import 'modules/user_info/user_info_screen.dart';
 import 'shared/components/constants.dart';
 
 void main() async{
@@ -25,8 +25,7 @@ void main() async{
   DioHelper.init();
   await CacheHelper.init();
   runApp( MyApp() );
-
-
+  String token = CacheHelper.getData('access_token');
 }
 
 class MyApp extends StatelessWidget {

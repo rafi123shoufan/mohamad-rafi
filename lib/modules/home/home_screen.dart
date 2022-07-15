@@ -12,7 +12,7 @@ import 'package:social_media/shared/styles/icon_broken.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LayoutCubit , LayoutStates>(
+    return BlocConsumer<LayoutCubit, LayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = LayoutCubit.get(context);
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Card(
                   elevation: 5,
-               /*   clipBehavior: Clip.hardEdge, // important to make border radius active
+                  /*   clipBehavior: Clip.hardEdge, // important to make border radius active
                    shape: RoundedRectangleBorder(
                      borderRadius: BorderRadius.circular(15),
                    ),*/
@@ -33,19 +33,22 @@ class HomeScreen extends StatelessWidget {
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/images/12.jpg' , ),
+                    image: AssetImage(
+                      'assets/images/12.jpg',
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 ListView.separated(
-                  shrinkWrap: true,
+                    shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => myPost(context ,cubit),
-                    separatorBuilder: (context, index) => SizedBox(height: 5,),
-                    itemCount: 10
-                )
+                    itemBuilder: (context, index) => myPost(context, cubit),
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 5,
+                        ),
+                    itemCount: 10)
               ],
             ),
           ),
@@ -54,23 +57,22 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
- Widget myPost(context , cubit) {
-   var pageController = PageController();
-   var cubit = LayoutCubit.get(context);
-   return GestureDetector(
-     onTap: (){
-       Navigator.push(
-         context,
-       MaterialPageRoute(
-           builder:(context) => PostScreen(),
-       )
-       );
-     },
-     child: Card(
+  Widget myPost(context, cubit) {
+    var pageController = PageController();
+    var cubit = LayoutCubit.get(context);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PostScreen(),
+            ));
+      },
+      child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        color: cubit.isDark ? darkCardColor : Colors.white ,
+        color: cubit.isDark ? darkCardColor : Colors.white,
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -79,11 +81,11 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage:NetworkImage(
+                    backgroundImage: NetworkImage(
                       'https://menshaircuts.com/wp-content/uploads/2019/06/business-casual-men-dress-code-history.jpg',
                     ),
                     radius: 28,
-                  ) ,
+                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -93,87 +95,87 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder:(context) => PersoneProfileScreen(),
-                                  )
-                              );
+                                    builder: (context) =>
+                                        PersoneProfileScreen(),
+                                  ));
                             },
                             child: Text(
-                              'Rafi Shoufan' ,
-                              style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-                            ),
+                              'Rafi Shoufan',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
                             ),
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           CircleAvatar(
-                            child: Icon(Icons.check , size: 10,),
+                            child: Icon(
+                              Icons.check,
+                              size: 10,
+                            ),
                             radius: 7,
                           )
                         ],
                       ),
-                      Text('January 21,2021 at 11:00 pm' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                          color: Colors.grey
-                      ),)
+                      Text(
+                        'January 21,2021 at 11:00 pm',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(color: Colors.grey),
+                      )
                     ],
-                  ) ,
+                  ),
                   Spacer(),
                   IconButton(
-                      onPressed: (){
+                      onPressed: () {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            backgroundColor: cubit.isDark ? Colors.black : Colors.white,
+                            backgroundColor:
+                                cubit.isDark ? Colors.black : Colors.white,
                             actions: [
                               Row(
                                 children: [
-                                  IconButton(onPressed: (){
-
-                                  }, icon: Icon(IconBroken.Bookmark)
-                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(IconBroken.Bookmark)),
                                   Text(
                                     'Save',
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                  ),
-
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(onPressed: (){
-
-                                  }, icon: Icon(IconBroken.Edit_Square)
-                                  ),
-                                  Text(
-                                      'Edit'
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
                                   ),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  IconButton(onPressed: (){
-
-                                  }, icon: Icon(IconBroken.Delete)
-                                  ),
-                                  Text(
-                                      'Delet'
-                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(IconBroken.Edit_Square)),
+                                  Text('Edit'),
                                 ],
                               ),
-
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(IconBroken.Delete)),
+                                  Text('Delet'),
+                                ],
+                              ),
                               TextButton(
-                              onPressed: (){
-                                Navigator.pop(context);
-                        }, child: Text(
-                        'Done'
-                        )
-                        ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Done')),
                               /*Row(
                                 children: [
                                   TextButton(
@@ -196,11 +198,12 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         );
-                  }, icon: Icon(Icons.more_horiz)
-                   //icon:  Icon(IconBroken.More_Square , color: Colors.white60,),
-                  )
+                      },
+                      icon: Icon(Icons.more_horiz)
+                      //icon:  Icon(IconBroken.More_Square , color: Colors.white60,),
+                      )
                 ],
-              ) ,
+              ),
               SizedBox(
                 height: 8,
               ),
@@ -213,15 +216,18 @@ class HomeScreen extends StatelessWidget {
               ),
               Container(
                   width: double.infinity,
-                  child: Text('We are going to conquer the social media community , we will make people forget about facebook and other social media apps '
-                      'because we have Rafi with us رافي لديكم فلا خوف عليكم ',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontWeight: FontWeight.w500
-                    ),
+                  child: Text(
+                    'We are going to conquer the social media community , we will make people forget about facebook and other social media apps '
+                    'because we have Rafi with us رافي لديكم فلا خوف عليكم ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.w500),
                     textAlign: TextAlign.start,
-                  )
+                  )),
+              SizedBox(
+                height: 10,
               ),
-              SizedBox(height: 10,),
               Container(
                 height: 275,
                 decoration: BoxDecoration(
@@ -230,17 +236,18 @@ class HomeScreen extends StatelessWidget {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 width: double.infinity,
                 child: PageView.builder(
-                  controller: pageController ,
+                  controller: pageController,
                   itemBuilder: (context, index) => myPhoto(),
-                physics: BouncingScrollPhysics(),
-                itemCount: 5,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: 5,
                 ),
               ),
-              SizedBox(height: 10,),
-
+              SizedBox(
+                height: 10,
+              ),
               SmoothPageIndicator(
-                  controller: pageController,
-                  count: 5,
+                controller: pageController,
+                count: 5,
                 /*effect: ExpandingDotsEffect(
                   dotWidth: 7,
                   dotHeight: 7,
@@ -254,7 +261,7 @@ class HomeScreen extends StatelessWidget {
                   activeDotColor: Colors.blue,
                   dotColor: Colors.grey,
                   spacing: 5,
-                //  verticalOffset: 10,
+                  //  verticalOffset: 10,
                 ),
               ),
               Padding(
@@ -265,12 +272,19 @@ class HomeScreen extends StatelessWidget {
                       child: InkWell(
                         child: Row(
                           children: [
-                            Icon(IconBroken.Heart , color: Colors.red,),
-                            SizedBox(width:10 ,),
-                            Text('15' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                color:Colors.grey,
-                                fontSize: 15
-                              ),
+                            Icon(
+                              IconBroken.Heart,
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '15',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(color: Colors.grey, fontSize: 15),
                             ),
                           ],
                         ),
@@ -281,19 +295,27 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(IconBroken.Chat , color: Colors.amberAccent,) ,
-                            SizedBox(width:10 ,),
-                            Text('10 comment' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                color:Colors.grey,
-                                fontSize: 15
-                            ),),
+                            Icon(
+                              IconBroken.Chat,
+                              color: Colors.amberAccent,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '10 comment',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(color: Colors.grey, fontSize: 15),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ],
                 ),
-              ) ,
+              ),
               SizedBox(
                 height: 5,
               ),
@@ -305,33 +327,237 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   children: [
-
                     InkWell(
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage:NetworkImage(
+                            backgroundImage: NetworkImage(
                               'https://menshaircuts.com/wp-content/uploads/2019/06/business-casual-men-dress-code-history.jpg',
                             ),
                             radius: 20,
-                          ) ,
+                          ),
                           SizedBox(
                             width: 15,
                           ),
-                          Text('Write a comment ...' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                              color:Colors.grey,
-                              fontSize: 15
-                          )
-                          ),
+                          Text('Write a comment ...',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(color: Colors.grey, fontSize: 15)),
                         ],
                       ),
-                      onTap: (){
-                        Navigator.push(
+                      onTap: () {
+                        /*Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder:(context) => CommentScreen(),
                             )
-                        );
+                        );*/
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.all(13),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height*0.8,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        color:Colors.grey,
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundImage:NetworkImage(
+                                                'https://menshaircuts.com/wp-content/uploads/2019/06/business-casual-men-dress-code-history.jpg',
+                                              ),
+                                              radius: 28,
+                                            ) ,
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child:
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  RichText(
+                                                    text: TextSpan(
+                                                        text: 'Rafi Shoufan ',
+                                                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16
+                                                        ),
+                                                        children: [
+                                                          TextSpan(
+                                                            text:'this is so funthis is so funthis is so funthis is so funthis is so funthis is so funthis is so funthis is so funthis is so funthis is so fun' ,
+                                                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                                                fontWeight: FontWeight.w400,
+                                                                fontSize: 16
+                                                            ),
+                                                          )
+                                                        ]
+                                                    ),
+                                                  ),
+
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        '15 h',
+                                                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+                                                      InkWell(
+                                                        onTap: (){
+
+                                                        },
+                                                        child: Icon(
+                                                          IconBroken.Heart,
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text(
+                                                          '456'
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage:NetworkImage(
+                                              'https://menshaircuts.com/wp-content/uploads/2019/06/business-casual-men-dress-code-history.jpg',
+                                            ),
+                                            radius: 28,
+                                          ) ,
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child:
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                RichText(
+                                                  text: TextSpan(
+                                                      text: 'Rafi Shoufan ',
+                                                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 16
+                                                      ),
+                                                      children: [
+                                                        TextSpan(
+                                                          text: 'this is so interisting ',
+                                                          style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                                              fontWeight: FontWeight.w400,
+                                                              fontSize: 16
+                                                          ),
+                                                        )
+                                                      ]
+                                                  ),
+
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '15 h',
+                                                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                                          color: Colors.grey
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    InkWell(
+                                                      onTap: (){
+
+                                                      },
+                                                      child: Icon(
+                                                        IconBroken.Heart,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                        '456'
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+
+                                          ),
+                                        ],
+                                      ),
+
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 10
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 0.5,
+                                                  color: Colors.grey.shade500,
+                                                ),
+                                                borderRadius: BorderRadius.circular(15),
+                                              ),
+                                              child: TextFormField(
+                                                decoration: InputDecoration(
+                                                  hintText: 'Add a comment...',
+                                                  hintStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                                    color: Colors.grey,
+                                                  ),
+                                                  border: InputBorder.none,
+                                                ),
+                                                minLines: 1,
+                                                maxLines: 3,
+                                              ),
+                                            ),
+                                          ),
+
+                                          Container(
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: a
+                                              ),
+                                              height: 50,
+                                              child: Icon(
+                                                IconBroken.Send,
+                                                color: Colors.white,
+                                              )
+                                          ),
+
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                            );
                       },
                     ),
                     Expanded(
@@ -339,13 +565,19 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(IconBroken.Heart , color: Colors.red,),
-                            SizedBox(width:10 ,),
-                            Text('Like' , style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                                color:Colors.grey,
-                                fontSize: 14
-                              )
+                            Icon(
+                              IconBroken.Heart,
+                              color: Colors.red,
                             ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Like',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(
+                                        color: Colors.grey, fontSize: 14)),
                           ],
                         ),
                       ),
@@ -357,22 +589,21 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-   ) ;
- }
+    );
+  }
 
- Widget myPhoto() {
+  Widget myPhoto() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: FittedBox(
         fit: BoxFit.fill,
         child: Image(
           height: 300,
-          image:AssetImage(
-            'assets/images/girl.jpg' ,
+          image: AssetImage(
+            'assets/images/girl.jpg',
           ),
         ),
       ),
     );
- }
+  }
 }
-

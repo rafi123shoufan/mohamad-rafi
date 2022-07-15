@@ -1,11 +1,13 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/modules/register_screen/cubit/register_cubit.dart';
 import 'package:social_media/modules/register_screen/cubit/register_states.dart';
-import 'package:social_media/modules/user_info/user_info.dart';
+import 'package:social_media/modules/user_info/user_info_screen.dart';
 import 'package:social_media/shared/components/components.dart';
+import 'package:social_media/shared/network/local/cache_helper.dart';
 import 'package:social_media/shared/styles/icon_broken.dart';
 
 import '../../shared/components/constants.dart';
@@ -26,7 +28,27 @@ class RegisterScreen extends StatelessWidget {
         create: (context) => RegisterCubit(),
         child: BlocConsumer<RegisterCubit, RegisterStates>(
           listener: (context, state) {
-
+            if (state is RegisterSuccessState) {
+              if (state.registerModel.status == true &&
+                  state.registerModel != null) {
+                print('toast success');
+                showToast(state.registerModel.message ?? 'success',
+                    ToastStates.Success);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                        (route) => false
+                );
+              }
+             if (state.registerModel.status == false && state.registerModel.message!=null) {
+                print('toast error');
+                showToast(
+                    state.registerModel.message ?? 'errrrrror', ToastStates.Error
+                );
+              }
+            }
           },
           builder: (context, state) {
             var cubit = RegisterCubit.get(context);
@@ -89,16 +111,17 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),*/
                                 registerTextFormField(
-                                  keyboardType: TextInputType.name,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'user name must not be empty';
-                                    }
-                                    return null;
-                                  },
-                                  controller: userNameController,
-                                  label: 'Name',
-                                  prefixIcon: IconBroken.User,
+                                    keyboardType: TextInputType.name,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'user name must not be empty';
+                                      }
+                                      return null;
+                                    },
+                                    controller: userNameController,
+                                    label: 'Name',
+                                    prefixIcon: IconBroken.User,
+                                    isHidden: false
                                 ),
                                 SizedBox(
                                   height: 30,
@@ -144,7 +167,9 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     controller: emailController,
                                     label: 'Email',
-                                    prefixIcon: IconBroken.Message),
+                                    prefixIcon: IconBroken.Message,
+                                    isHidden: false
+                                ),
                                 SizedBox(
                                   height: 30,
                                 ),
@@ -263,38 +288,45 @@ class RegisterScreen extends StatelessWidget {
                                 ),
 
                                 SizedBox(height: 25,),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (formKey.currentState!.validate()) {
-                                      Navigator.pushAndRemoveUntil(context,
-                                          MaterialPageRoute(
-                                            builder: (context) => UserInfoScreen(),),
-                                              (route) => false);
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
-                                    child: Container(
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        gradient: linearGradient1,
-                                        borderRadius: BorderRadius.circular(30),
-                                        color: Colors.white,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Sign Up',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold
+                                ConditionalBuilder(
+                                    condition: state is! RegisterLoadingState,
+                                    builder: (context)=> GestureDetector(
+                                      onTap: () {
+                                        if (formKey.currentState!.validate()) {
+                                          print('nfekfnekfnke');
+                                          cubit.userRegister(
+                                              name: userNameController.text,
+                                              email: emailController.text,
+                                              password: passwordController.text,
+                                              password_confirmation: confirmPasswordController.text
+                                          );
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40),
+                                        child: Container(
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            gradient: linearGradient1,
+                                            borderRadius: BorderRadius.circular(30),
+                                            color: Colors.white,
                                           ),
-                                          textAlign: TextAlign.center,
+                                          child: Center(
+                                            child: Text(
+                                              'Sign Up',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    fallback:(context)=> Center(child: CircularProgressIndicator(),),
                                 ),
                                 SizedBox(height: 28,),
                                 Row(

@@ -9,7 +9,7 @@ import 'package:social_media/layout/layout_screen.dart';
 import 'package:social_media/modules/login_screen/cubit/login_cubit.dart';
 import 'package:social_media/modules/login_screen/cubit/login_states.dart';
 import 'package:social_media/modules/register_screen/register_screen.dart';
-import 'package:social_media/modules/user_info/user_info.dart';
+import 'package:social_media/modules/user_info/user_info_screen.dart';
 import 'package:social_media/shared/components/components.dart';
 import 'package:social_media/shared/components/constants.dart';
 import 'package:social_media/shared/network/local/cache_helper.dart';
@@ -26,21 +26,24 @@ class LoginScreen extends StatelessWidget {
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          if (state is LoginSuccessState) {
-            if (state.loginModel.status) {
-              showToast(state.loginModel.message, ToastStates.Success);
+          if (state is LoginSuccessState && state.loginModel != null) {
+            if (state.loginModel.status == true) {
+              showToast(state.loginModel.message??'successssssss', ToastStates.Success);
               CacheHelper.saveData(
                   key: 'access_token', value: state.loginModel.access_token
-              )
-                  .then((value) {
+              ).then((value) {
+                token ='Bearer ${state.loginModel.access_token}';
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LayoutScreen(),),
+                    MaterialPageRoute(builder: (context) => UserInfoScreen(),),
                         (route) => false
                 );
+              }).catchError((error){
+                print(error.toString());
               });
-            } else {
-              showToast(state.loginModel.message, ToastStates.Error);
+            }  if(state.loginModel.status == false) {
+              print('show error toast');
+              showToast(state.loginModel.message ?? 'error', ToastStates.Error);
             }
           }
         },
@@ -244,7 +247,7 @@ class LoginScreen extends StatelessWidget {
                                 height: 25,
                               ),
                               ConditionalBuilder(
-                                  condition: state is! LoginLoadingState,
+                                  condition:  state is! LoginLoadingState ,
                                   builder: (context) =>
                                       GestureDetector(
                                         onTap: () {
@@ -281,7 +284,8 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ),
                                   fallback: (context) => Center(
-                                    child: CircularProgressIndicator(),)
+                                    child: CircularProgressIndicator(),
+                                  )
                               ),
                               SizedBox(
                                 height: 25,

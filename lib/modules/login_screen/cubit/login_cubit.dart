@@ -33,19 +33,19 @@ void userLogin({
     DioHelper.postData(
         url: Login,
         data: {
-          "email": email,
-          "password": password
+          'email': email,
+          'password': password
         }
     ).then((value) {
       print(state);
       loginModel = LoginModel.fromjson(value.data);
       print(value.data);
       emit(LoginSuccessState(loginModel!));
-      print('success');
     }).catchError((error){
       print(state);
       emit(LoginErrorState());
       print(error.toString());
+      print('login cubit error');
     });
 }
 }
