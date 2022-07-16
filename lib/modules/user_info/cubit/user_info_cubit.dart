@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +26,8 @@ class UserInfoCubit extends Cubit<UserInfoStates> {
     required String Job,
     required String studing,
     required String bio,
-    required Image,
-    required Image_cover
+     File ? Image,
+     File ? Image_cover
   }) {
     emit(LoadingSetUserInformation());
     print('state');
@@ -56,4 +58,7 @@ class UserInfoCubit extends Cubit<UserInfoStates> {
       print('set user info error ');
     });
   }
+   /*uploadUserProfileImage() async{
+    var fromData = FromData.fromMap()
+  }*/
 }
